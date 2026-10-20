@@ -1,0 +1,316 @@
+/* ============================================================
+   app.css — global styles, on the Sobamail Design System.
+   Tokens are imported first; everything below is expressed in
+   design-system custom properties (see src/design/*.css).
+
+   Shell chrome (header, sidebar, nav, card frame, save button)
+   is styled in App.svelte's scoped block. This file owns the
+   base layer plus the form/content styles the child components
+   (Account, Limits) render.
+   ============================================================ */
+
+@import "./design/fonts.css";
+@import "./design/colors.css";
+@import "./design/typography.css";
+@import "./design/spacing.css";
+@import "./design/effects.css";
+
+/* ---------------- Base ----------------
+   NOTE: this file is imported as plain CSS (main.ts), not a Svelte
+   component, so selectors are already global — no :global() wrapper
+   (which is dropped as invalid here). */
+:root {
+    color-scheme: light;
+}
+
+[data-theme="dark"] {
+    color-scheme: dark;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    font-family: var(--font-ui);
+    font-size: var(--text-base);
+    line-height: var(--leading-normal);
+    color: var(--text-primary);
+    background-color: var(--surface-app);
+    /* Only Light (300) + Regular (400) ship; allow synthesized
+       medium/bold for emphasis rather than suppressing it. */
+    font-synthesis: weight;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+#root,
+#app {
+    width: 100%;
+    height: 100%;
+}
+
+button:focus-visible {
+    outline: none;
+    box-shadow: var(--focus-ring);
+}
+
+/* ---------------- Content pane ---------------- */
+.card-content {
+    padding: var(--space-8);
+}
+
+h2 {
+    margin: 0 0 var(--space-7) 0;
+    font-size: var(--text-lg);
+    font-weight: var(--weight-medium);
+    color: var(--text-primary);
+}
+
+/* ---------------- Forms ---------------- */
+.form-section {
+    max-width: 32em;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-6);
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+}
+
+label {
+    display: block;
+    font-size: var(--text-sm);
+    font-weight: var(--weight-regular);
+    color: var(--text-secondary);
+    margin: 0;
+}
+
+input[type="text"],
+input[type="url"],
+input[type="number"],
+select {
+    font-family: var(--font-ui);
+    font-size: var(--text-base);
+    color: var(--text-primary);
+    background: var(--white);
+    border: var(--bw-base) solid var(--border-default);
+    border-radius: var(--radius-sm);
+    padding: 8px 10px;
+    outline: none;
+    transition: border-color var(--dur-fast) var(--ease-standard),
+        box-shadow var(--dur-fast) var(--ease-standard);
+}
+
+input[type="text"]::placeholder,
+input[type="url"]::placeholder,
+input[type="number"]::placeholder {
+    color: var(--text-muted);
+}
+
+input:focus,
+select:focus {
+    border-color: var(--blue-500);
+    box-shadow: var(--focus-ring);
+}
+
+/* Dark: inputs sit on a sunken dark surface (the base white would glare) */
+[data-theme="dark"] input[type="text"],
+[data-theme="dark"] input[type="url"],
+[data-theme="dark"] input[type="number"],
+[data-theme="dark"] select {
+    background: var(--surface-sunken);
+}
+
+/* Read-only address field — envelope motif via the paper-filled mail icon */
+.email-display {
+    display: flex;
+    align-items: center;
+    gap: var(--space-4);
+    padding: var(--space-4) var(--space-5);
+    background-color: var(--surface-sunken);
+    border: var(--bw-hair) solid var(--border-subtle);
+    border-radius: var(--radius-sm);
+}
+
+.mail-icon {
+    width: 20px;
+    height: 20px;
+    flex: none;
+}
+
+.email-display span {
+    color: var(--text-primary);
+}
+
+.number-input-group {
+    display: flex;
+    align-items: center;
+    gap: var(--space-4);
+}
+
+.number-input-group input {
+    width: 8rem;
+}
+
+.unit {
+    color: var(--text-secondary);
+    font-weight: var(--weight-regular);
+}
+
+.help-text {
+    margin: var(--space-2) 0 0 0;
+    font-size: var(--text-xs);
+    color: var(--text-muted);
+    line-height: var(--leading-snug);
+}
+
+.help-text a,
+a {
+    color: var(--text-link);
+    text-decoration: none;
+}
+
+.help-text a:hover,
+a:hover {
+    text-decoration: underline;
+}
+
+/* ---------------- Roles table ---------------- */
+table {
+    border-collapse: collapse;
+    width: 100%;
+    font-size: var(--text-base);
+}
+
+th {
+    text-align: left;
+    font-size: var(--text-sm);
+    font-weight: var(--weight-medium);
+    color: var(--text-secondary);
+    padding: var(--space-3) var(--space-5);
+    border-bottom: var(--bw-hair) solid var(--border-default);
+}
+
+td {
+    padding: var(--space-3) var(--space-5);
+    border-bottom: var(--bw-hair) solid var(--border-subtle);
+    color: var(--text-primary);
+}
+
+.form-group legend {
+    font-size: var(--text-sm);
+    color: var(--text-secondary);
+    width: 30%;
+    text-align: right;
+    margin-bottom: 0;
+}
+
+/* ---------------- Secondary / small buttons ---------------- */
+.form-button-small {
+    width: auto;
+    margin-left: 0;
+    margin-right: 0;
+}
+
+.form-subbutton-small {
+    width: auto;
+    padding: var(--space-3);
+    margin-left: var(--space-2);
+    margin-right: var(--space-2);
+}
+
+#install-options {
+    margin-bottom: var(--space-4);
+    width: 100%;
+}
+
+/* ---------------- Alerts ---------------- */
+.alert {
+    position: fixed;
+    left: 20rem;
+    width: auto;
+    height: auto;
+    padding: var(--space-3) var(--space-4);
+    margin: var(--space-3);
+    line-height: 1;
+    border-radius: var(--radius-sm);
+    box-shadow: var(--shadow-md);
+    cursor: pointer;
+    font-family: var(--font-ui);
+    font-size: var(--text-base);
+    font-weight: var(--weight-regular);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.alert .alert-close {
+    font-size: var(--text-sm);
+    font-weight: var(--weight-bold);
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    padding: var(--space-1) var(--space-3);
+    margin-left: var(--space-5);
+    border-radius: var(--radius-circle);
+    line-height: 1;
+    width: auto;
+    height: auto;
+    min-width: 20px;
+    max-width: 24px;
+}
+
+.success {
+    background-color: #eafff0;
+    border: var(--bw-hair) solid var(--green-300);
+    color: var(--green-600);
+}
+
+.warning {
+    background-color: #fff8e6;
+    border: var(--bw-hair) solid var(--amber-400);
+    color: #8a6100;
+}
+
+.error {
+    background-color: #fff0ee;
+    border: var(--bw-hair) solid var(--red-300);
+    color: var(--red-600);
+}
+
+.alert.success .alert-close,
+.alert.success .alert-close:hover {
+    color: var(--green-600);
+}
+
+.alert.warning .alert-close:hover {
+    color: var(--orange-500);
+}
+
+.alert.error .alert-close,
+.alert.error .alert-close:hover {
+    color: var(--red-600);
+}
+
+/* Dark alert tints (the design system doesn't define alert-specific
+   tokens; these are darkened to sit on the dark app surface) */
+[data-theme="dark"] .success {
+    background-color: #10241a;
+    border-color: #1f6b3f;
+    color: var(--green-500);
+}
+
+[data-theme="dark"] .warning {
+    background-color: #2a2413;
+    border-color: #6b5620;
+    color: var(--amber-400);
+}
+
+[data-theme="dark"] .error {
+    background-color: #2a1512;
+    border-color: #7a3327;
+    color: var(--red-300);
+}
